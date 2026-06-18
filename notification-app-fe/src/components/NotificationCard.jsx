@@ -88,8 +88,8 @@ export function NotificationCard({ notification, isRead, onToggleRead }) {
       onClick={onToggleRead}
     >
       <CardContent sx={{ py: 1.75, px: 2, "&:last-child": { pb: 1.75 } }}>
-        <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
-          <Stack direction="row" spacing={2} alignItems="center" sx={{ flexGrow: 1 }}>
+        <Stack direction="row" spacing={2} sx={{ alignItems: "center", justifyContent: "space-between" }}>
+          <Stack direction="row" spacing={2} sx={{ alignItems: "center", flexGrow: 1 }}>
             {/* Left side circular icon container */}
             <Box
               sx={{

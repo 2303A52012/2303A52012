@@ -104,8 +104,8 @@ export function NotificationsPage() {
   return (
     <Box sx={{ maxWidth: 720, mx: "auto", px: 2, py: 4 }}>
       {/* Header section with Dynamic Unread Badge */}
-      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>
-        <Stack direction="row" alignItems="center" spacing={1.5}>
+      <Stack direction="row" mb={3} sx={{ alignItems: "center", justifyContent: "space-between" }}>
+        <Stack direction="row" spacing={1.5} sx={{ alignItems: "center" }}>
           <Badge badgeContent={unreadCount} color="primary" max={99}>
             <NotificationsIcon sx={{ fontSize: 28, color: "primary.main" }} />
           </Badge>
@@ -136,7 +136,7 @@ export function NotificationsPage() {
 
       {/* Loading state spinner */}
       {loading && (
-        <Box display="flex" justifyContent="center" py={12}>
+        <Box sx={{ display: "flex", justifyContent: "center", py: 12 }}>
           <CircularProgress size={44} thickness={4} />
         </Box>
       )}
@@ -183,7 +183,7 @@ export function NotificationsPage() {
 
       {/* Footer Pagination */}
       {!loading && !error && totalPages > 1 && (
-        <Box display="flex" justifyContent="center" mt={5}>
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
           <Pagination
             count={totalPages}
             page={page}

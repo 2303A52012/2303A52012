@@ -110,7 +110,7 @@ export default function App() {
         }}
       >
         <Container maxWidth="md">
-          <Stack direction="row" justifyContent="space-between" alignItems="center">
+          <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center" }}>
             <Typography variant="h6" fontWeight={800} color="primary.main">
               CAMPUS METRICS
             </Typography>

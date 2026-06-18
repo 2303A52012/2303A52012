@@ -102,7 +102,10 @@ export async function Log(stack, level, packageName, message) {
   const normStack = String(stack).toLowerCase();
   const normLevel = String(level).toLowerCase();
   const normPackage = String(packageName).toLowerCase();
+  
+  // Truncate messages exceeding 48 characters to respect API size limits
   const rawMessage = String(message);
+  const normMessage = rawMessage.length > 48 ? rawMessage.slice(0, 45) + "..." : rawMessage;
 
   // 2. Constraints Validation
   if (!ALLOWED_STACKS.has(normStack)) {
@@ -132,7 +135,7 @@ export async function Log(stack, level, packageName, message) {
           stack: normStack,
           level: normLevel,
           package: normPackage,
-          message: rawMessage
+          message: normMessage
         })
       });
 
