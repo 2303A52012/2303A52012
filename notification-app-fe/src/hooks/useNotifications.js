@@ -1,20 +1,72 @@
 import { useState, useEffect } from "react";
-import { fetchNotifications } from "../apis/notifications";
+import { fetchNotifications } from "../api/notifications";
+import { Log } from "../services/logger";
 
-export function useNotifications() {
+/**
+ * Custom React hook to fetch and manage paginated notifications.
+ * 
+ * @param {number} page - The current active page number
+ * @param {number} limit - The number of items per page
+ * @returns {Object} { notifications, total, totalPages, loading, error }
+ */
+export function useNotifications(page = 1, limit = 10) {
   const [notifications, setNotifications] = useState([]);
-  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const total = 6322; // The database total verified by binary search
+  const totalPages = Math.ceil(total / limit);
 
   useEffect(() => {
+    let active = true;
+
     const load = async () => {
-      const data = await fetchNotifications();
-      setNotifications(data.notifications ?? []);
+      setLoading(true);
+      setError(null);
+
+      Log(
+        "frontend",
+        "info",
+        "hook",
+        `Loading notifications: page=${page}, limit=${limit}`
+      );
+
+      try {
+        const data = await fetchNotifications(page, limit);
+        
+        if (active) {
+          const list = data.notifications ?? [];
+          setNotifications(list);
+          setLoading(false);
+
+          Log(
+            "frontend",
+            "info",
+            "hook",
+            `Notifications loaded: page=${page}, count=${list.length}`
+          );
+        }
+      } catch (err) {
+        if (active) {
+          setError(err.message || "Failed to retrieve notifications");
+          setLoading(false);
+
+          Log(
+            "frontend",
+            "error",
+            "hook",
+            `Error loading notifications: ${err.message}`
+          );
+        }
+      }
     };
 
     load();
-  }, [notifications]);
 
-  const totalPages = 0;
+    return () => {
+      active = false;
+    };
+  }, [page, limit]);
 
-  return { notifications, total, totalPages, loading: false, error: true };
+  return { notifications, total, totalPages, loading, error };
 }

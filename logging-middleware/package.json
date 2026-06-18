@@ -1,0 +1,8 @@
+{
+  "name": "logging-middleware",
+  "version": "1.0.0",
+  "description": "Reusable logging middleware package for Affordmed Campus Evaluation",
+  "main": "index.js",
+  "type": "module",
+  "private": true
+}
